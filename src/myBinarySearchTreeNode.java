@@ -5,7 +5,9 @@ class myBinarySearchTreeNode{
     
   myBinarySearchTreeNode(int inValue){
     // created a new node with empty child pointers
-    myBinarySearchTreeNode binaryTree = new myBinarySearchTreeNode(inValue);
+    myValue = inValue;
+    left = null;
+    right = null;
   }
   
   myBinarySearchTreeNode(int[] A){
@@ -14,22 +16,22 @@ class myBinarySearchTreeNode{
     myValue = A[0];
     myBinarySearchTreeNode binaryTree = new myBinarySearchTreeNode(myValue);
     for(int i = 1; i<A.length; i++){
-      binaryTree.insert(A[i]);
+      insert(A[i]);
     }
   }
 
   public int size(){
     int sum = 1;
+    int leftCount = 0;
+    int rightCount = 0;
     if(left != null){
-      sum++;
-      sum = sum + left.size();
+      leftCount += left.size();
     }
     if(right != null){
-      sum++;
-      sum = sum + right.size();
+      rightCount += right.size();
     }
 
-    return sum;
+    return sum + rightCount + leftCount;
   }
   
   public void insert(int inValue){
@@ -85,11 +87,15 @@ class myBinarySearchTreeNode{
      // Additionally, remember that the depth is the number of nodes on the path from a node to the root 
      // (i.e. the number of the recursive calls).
     if(search > myValue){
-      return right.depth(search) + 1;
+      if(right != null) {
+        return right.depth(search) + 1;
+      }
     }
 
     if(search < myValue){
-      return left.depth(search) + 1;
+      if(left != null) {
+        return left.depth(search) + 1;
+      }
     }
 
     if(search == myValue){
